@@ -1,0 +1,12 @@
+{
+  "name": "expense-tracker",
+  "scripts": {
+    "dev": "bun run --hot server/index.ts"
+  },
+  "dependencies": {
+    "hono": "^4.7.5"
+  },
+  "devDependencies": {
+    "@types/bun": "latest"
+  }
+}
