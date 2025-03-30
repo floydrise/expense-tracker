@@ -10,16 +10,16 @@ export const Route = createFileRoute("/create-expense")({
 function CreateExpense() {
   return (
     <div>
-      <h1>Create expense:</h1>
-      <form className={"max-w-xl m-auto"}>
-        <Label htmlFor="title" className={"text-lg mb-2"}>
+      <h1 className={"md:m-4 ml-2 mt-2 text-lg"}>Create expense:</h1>
+      <form className={"max-w-xl p-2 m-auto"}>
+        <Label htmlFor="title" className={"text-sm mb-1"}>
           Title
         </Label>
-        <Input type="text" id="title" placeholder="Title" />
-        <Label htmlFor="amount" className={"text-lg mb-2"}>
+        <Input type="text" id="title" placeholder="Title" className={"mb-2"}/>
+        <Label htmlFor="amount" className={"text-sm mb-1"}>
           Amount
         </Label>
-        <Input type="number" id="amount" placeholder="Amount" />
+        <Input type="number" id="amount" placeholder="Amount" className={"mb-2"}/>
         <Button className={"mt-4"} type={"submit"}>
           Create expense
         </Button>
