@@ -1,3 +1,4 @@
+import { createFileRoute } from "@tanstack/react-router";
 import {
   Card,
   CardContent,
@@ -16,13 +17,16 @@ async function getTotalSpent() {
   return await res.json();
 }
 
-function App() {
+export const Route = createFileRoute("/")({
+  component: Index,
+});
+
+function Index() {
   const { isPending, error, data } = useQuery({
     queryKey: ["get-total-spent"],
     queryFn: getTotalSpent,
   });
 
-  if (isPending) return "Loading ...";
   if (error) return "An error occured" + error.message;
   return (
     <Card className={"w-[350px] m-auto"}>
@@ -30,9 +34,7 @@ function App() {
         <CardTitle>Total spent</CardTitle>
         <CardDescription>Total amount spent</CardDescription>
       </CardHeader>
-      <CardContent>{data.total}</CardContent>
+      <CardContent>{isPending ? "..." : data.total}</CardContent>
     </Card>
   );
 }
-
-export default App;
