@@ -1,7 +1,7 @@
 {
   "name": "expense-tracker",
   "scripts": {
-    "dev": "bun run --hot server/index.ts"
+    "dev": "bun run --hot server/app.ts"
   },
   "dependencies": {
     "@hono/zod-validator": "^0.4.3",
