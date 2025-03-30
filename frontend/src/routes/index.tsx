@@ -9,6 +9,10 @@ import {
 import { api } from "@/lib/api.ts";
 import { useQuery } from "@tanstack/react-query";
 
+export const Route = createFileRoute("/")({
+  component: Index,
+});
+
 async function getTotalSpent() {
   const res = await api.expenses["total-spent"].$get();
   if (!res.ok) {
@@ -16,10 +20,6 @@ async function getTotalSpent() {
   }
   return await res.json();
 }
-
-export const Route = createFileRoute("/")({
-  component: Index,
-});
 
 function Index() {
   const { isPending, error, data } = useQuery({
