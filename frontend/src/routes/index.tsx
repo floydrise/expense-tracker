@@ -29,7 +29,7 @@ function Index() {
 
   if (error) return "An error occured" + error.message;
   return (
-    <Card className={"w-[350px] m-auto"}>
+    <Card className={"w-[350px] m-auto mt-10"}>
       <CardHeader>
         <CardTitle>Total spent</CardTitle>
         <CardDescription>Total amount spent</CardDescription>

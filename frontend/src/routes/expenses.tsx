@@ -10,6 +10,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { Skeleton } from "@/components/ui/skeleton.tsx";
 
 export const Route = createFileRoute("/expenses")({
   component: Expenses,
@@ -31,7 +32,7 @@ function Expenses() {
 
   if (error) return "An error occured" + error.message;
   return (
-    <div className={"p-2 max-w-3xl m-auto"}>
+    <div className={"max-w-3xl m-auto mt-10"}>
       <Table>
         <TableCaption>A list of all your expenses.</TableCaption>
         <TableHeader>
@@ -43,8 +44,22 @@ function Expenses() {
         </TableHeader>
         <TableBody>
           {isPending
-            ? "..."
-            : data?.expenses.map((expense) => (
+            ? Array(3)
+                .fill(null)
+                .map((_, index) => (
+                  <TableRow key={index}>
+                    <TableCell className="font-medium">
+                      <Skeleton className="h-4" />
+                    </TableCell>
+                    <TableCell>
+                      <Skeleton className="h-4" />
+                    </TableCell>
+                    <TableCell>
+                      <Skeleton className="h-4" />
+                    </TableCell>
+                  </TableRow>
+                ))
+            : data.expenses.map((expense) => (
                 <TableRow key={expense.id}>
                   <TableCell className="font-medium">{expense.id}</TableCell>
                   <TableCell>{expense.title}</TableCell>
