@@ -17,7 +17,7 @@ function FieldInfo({ field }: { field: AnyFieldApi }) {
   );
 }
 
-export const Route = createFileRoute("/create-expense")({
+export const Route = createFileRoute("/_authenticated/create-expense")({
   component: CreateExpense,
 });
 
