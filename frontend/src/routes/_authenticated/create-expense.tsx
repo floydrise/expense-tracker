@@ -26,14 +26,14 @@ function CreateExpense() {
   const form = useForm({
     defaultValues: {
       title: "",
-      amount: 0,
+      amount: "0",
     },
     onSubmit: async ({ value }) => {
       const res = await api.expenses.$post({ json: value });
       if (!res.ok) {
         throw new Error("An error occurred!");
       }
-      navigate({to: "/expenses"})
+      navigate({ to: "/expenses" });
     },
   });
 
@@ -94,7 +94,7 @@ function CreateExpense() {
                   name={field.name}
                   value={field.state.value}
                   onBlur={field.handleBlur}
-                  onChange={(e) => field.handleChange(Number(e.target.value))}
+                  onChange={(e) => field.handleChange(e.target.value)}
                   className={"mb-2"}
                 />
                 <FieldInfo field={field} />
