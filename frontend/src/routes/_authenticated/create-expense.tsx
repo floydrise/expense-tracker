@@ -44,7 +44,7 @@ function CreateExpense() {
 
   return (
     <div>
-      <h1 className={"md:m-4 ml-2 mt-2 text-lg"}>Create expense:</h1>
+      <h1 className={"m-4 text-3xl flex justify-center"}>Create expense:</h1>
       <form
         onSubmit={(e) => {
           e.preventDefault();
