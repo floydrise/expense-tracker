@@ -5,12 +5,15 @@ import { Button } from "@/components/ui/button.tsx";
 import { useForm } from "@tanstack/react-form";
 import type { AnyFieldApi } from "@tanstack/react-form";
 import { api } from "@/lib/api.ts";
+import { createExpenseSchema } from "../../../../server/types.ts";
 
 function FieldInfo({ field }: { field: AnyFieldApi }) {
   return (
     <>
       {field.state.meta.isTouched && field.state.meta.errors.length ? (
-        <em>{field.state.meta.errors.join(", ")}</em>
+        <em className={"text-red-500"}>
+          * {field.state.meta.errors.map((err) => err.message).join(",")}
+        </em>
       ) : null}
       {field.state.meta.isValidating ? "Validating..." : null}
     </>
@@ -52,13 +55,7 @@ function CreateExpense() {
           <form.Field
             name={"title"}
             validators={{
-              onChange: ({ value }) =>
-                !value
-                  ? "* A title is required"
-                  : value.length < 3
-                    ? "* Title must be at least 3 characters"
-                    : undefined,
-              onChangeAsyncDebounceMs: 500,
+              onChange: createExpenseSchema.shape.title,
             }}
             children={(field) => (
               <>
@@ -83,6 +80,9 @@ function CreateExpense() {
         <div>
           <form.Field
             name={"amount"}
+            validators={{
+              onChange: createExpenseSchema.shape.amount,
+            }}
             children={(field) => (
               <>
                 <Label htmlFor={field.name} className={"text-sm mb-1"}>

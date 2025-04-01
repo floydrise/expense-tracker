@@ -1,20 +1,10 @@
 import { Hono } from "hono";
-import { z } from "zod";
 import { zValidator } from "@hono/zod-validator";
 import { getUser } from "../kinde";
 import { db } from "../db";
 import { expenses as expensesTable } from "../db/schema/expenses";
 import { and, desc, eq, sum } from "drizzle-orm";
-
-const expenseSchema = z.object({
-  id: z.number().int().min(1).positive(),
-  title: z.string(),
-  amount: z.string(),
-});
-
-const createPostSchema = expenseSchema.omit({ id: true });
-
-type Expense = z.infer<typeof expenseSchema>;
+import { createExpenseSchema } from "../types";
 
 const expensesRoute = new Hono()
   .get("/", getUser, async (c) => {
@@ -50,7 +40,7 @@ const expensesRoute = new Hono()
       .then((res) => res[0]);
     return c.json(result);
   })
-  .post("/", getUser, zValidator("json", createPostSchema), async (c) => {
+  .post("/", getUser, zValidator("json", createExpenseSchema), async (c) => {
     const user = c.var.user;
     const expense = c.req.valid("json");
 
