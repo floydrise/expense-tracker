@@ -24,7 +24,7 @@ function NavBar() {
     >
       <Link to="/">
         <img
-          src={"./public/favicon.ico"}
+          src={"/logo.png"}
           width={50}
           height={50}
           alt={"app logo"}
