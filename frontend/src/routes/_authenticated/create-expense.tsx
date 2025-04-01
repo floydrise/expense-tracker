@@ -4,9 +4,11 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button.tsx";
 import { useForm } from "@tanstack/react-form";
 import type { AnyFieldApi } from "@tanstack/react-form";
-import { api } from "@/lib/api.ts";
+import { api, getAllExpensesQueryOptions } from "@/lib/api.ts";
 import { createExpenseSchema } from "../../../../server/types.ts";
 import { Calendar } from "@/components/ui/calendar.tsx";
+import { useQueryClient } from "@tanstack/react-query";
+import {toast} from "sonner";
 
 function FieldInfo({ field }: { field: AnyFieldApi }) {
   return (
@@ -26,6 +28,7 @@ export const Route = createFileRoute("/_authenticated/create-expense")({
 });
 
 function CreateExpense() {
+  const queryClient = useQueryClient();
   const navigate = useNavigate();
   const form = useForm({
     defaultValues: {
@@ -34,11 +37,20 @@ function CreateExpense() {
       date: new Date().toISOString(),
     },
     onSubmit: async ({ value }) => {
+      const existingExpenses = await queryClient.ensureQueryData(
+        getAllExpensesQueryOptions,
+      );
       const res = await api.expenses.$post({ json: value });
       if (!res.ok) {
         throw new Error("An error occurred!");
       }
+      const newExpense = await res.json().then((data) => data[0]);
+      queryClient.setQueryData(getAllExpensesQueryOptions.queryKey, {
+        ...existingExpenses,
+        expenses: [newExpense, ...existingExpenses.expenses],
+      });
       navigate({ to: "/expenses" });
+      toast.success("Expense added")
     },
   });
 

@@ -5,6 +5,7 @@ import {
 } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import { QueryClient } from "@tanstack/react-query";
+import {Toaster} from "@/components/ui/sonner.tsx";
 
 interface MyRouterContext {
   queryClient: QueryClient;
@@ -71,6 +72,7 @@ function Root() {
       <NavBar />
       <hr />
       <Outlet />
+      <Toaster />
       <TanStackRouterDevtools />
     </>
   );

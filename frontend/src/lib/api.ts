@@ -19,3 +19,17 @@ export const userQueryOption = queryOptions({
   queryFn: getCurrentUser,
   staleTime: Infinity,
 });
+
+export async function getAllExpenses() {
+  const res = await api.expenses.$get();
+  if (!res.ok) {
+    throw new Error("server error");
+  }
+  return await res.json();
+}
+
+export const getAllExpensesQueryOptions = queryOptions({
+  queryKey: ["get-all-expenses"],
+  queryFn: getAllExpenses,
+  staleTime: 1000 * 60 * 5,
+})
