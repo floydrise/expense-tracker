@@ -6,6 +6,7 @@ import { useForm } from "@tanstack/react-form";
 import type { AnyFieldApi } from "@tanstack/react-form";
 import { api } from "@/lib/api.ts";
 import { createExpenseSchema } from "../../../../server/types.ts";
+import { Calendar } from "@/components/ui/calendar.tsx";
 
 function FieldInfo({ field }: { field: AnyFieldApi }) {
   return (
@@ -30,6 +31,7 @@ function CreateExpense() {
     defaultValues: {
       title: "",
       amount: "0",
+      date: new Date().toISOString(),
     },
     onSubmit: async ({ value }) => {
       const res = await api.expenses.$post({ json: value });
@@ -49,8 +51,9 @@ function CreateExpense() {
           e.stopPropagation();
           form.handleSubmit();
         }}
-        className={"max-w-xl p-2 m-auto"}
+        className={"flex flex-col max-w-xl p-2 m-auto"}
       >
+        {/* Title */}
         <div>
           <form.Field
             name={"title"}
@@ -77,6 +80,7 @@ function CreateExpense() {
             )}
           />
         </div>
+        {/*Amount*/}
         <div>
           <form.Field
             name={"amount"}
@@ -96,6 +100,28 @@ function CreateExpense() {
                   onBlur={field.handleBlur}
                   onChange={(e) => field.handleChange(e.target.value)}
                   className={"mb-2"}
+                />
+                <FieldInfo field={field} />
+              </>
+            )}
+          />
+        </div>
+        {/* Calendar */}
+        <div className={""}>
+          <form.Field
+            name={"date"}
+            validators={{
+              onChange: createExpenseSchema.shape.date,
+            }}
+            children={(field) => (
+              <>
+                <Calendar
+                  mode="single"
+                  selected={new Date(field.state.value)}
+                  onSelect={(date) =>
+                    field.handleChange((date ?? new Date()).toISOString())
+                  }
+                  className="rounded-md border shadow max-w-fit m-auto"
                 />
                 <FieldInfo field={field} />
               </>

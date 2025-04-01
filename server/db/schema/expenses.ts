@@ -1,4 +1,5 @@
 import {
+  date,
   index,
   numeric,
   pgTable,
@@ -16,6 +17,7 @@ export const expenses = pgTable(
     userId: text("user_id").notNull(),
     title: text("title").notNull(),
     amount: numeric("amount", { precision: 12, scale: 2 }),
+    date: date().notNull(),
     createdAt: timestamp("created_at").defaultNow(),
   },
   (expenses) => {
@@ -30,7 +32,8 @@ export const insertExpensesSchema = createInsertSchema(expenses, {
     .string()
     .min(3, { message: "Title must be at least 3 characters long!" }),
   amount: z.string().regex(/^\d+(\.\d{1,2})?$/, {
-    message: "Amount must be a positive value (max 2 digits after decimal point)",
+    message:
+      "Amount must be a positive value (max 2 digits after decimal point)",
   }),
 });
 export const selectExpensesSchema = createSelectSchema(expenses);

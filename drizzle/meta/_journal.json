@@ -15,6 +15,13 @@
       "when": 1743502498497,
       "tag": "0001_eager_senator_kelly",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1743519726109,
+      "tag": "0002_acoustic_jack_flag",
+      "breakpoints": true
     }
   ]
 }
