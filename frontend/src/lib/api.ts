@@ -32,4 +32,11 @@ export const getAllExpensesQueryOptions = queryOptions({
   queryKey: ["get-all-expenses"],
   queryFn: getAllExpenses,
   staleTime: 1000 * 60 * 5,
-})
+});
+
+export const deleteExpense = async ({ id }: { id: number }) => {
+  const res = await api.expenses[":id{[0-9]+}"].$delete({param: {id: String(id)}})
+  if (!res.ok) {
+    throw new Error("An error occured in deleteExpense fn")
+  }
+};
