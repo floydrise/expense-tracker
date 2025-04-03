@@ -1,7 +1,7 @@
 {
   "name": "expense-tracker",
   "scripts": {
-    "dev": "bun run --hot server/app.ts",
+    "dev": "bun run --hot ./server/app.ts",
     "start": "bun run server/app.ts"
   },
   "dependencies": {
